@@ -9,6 +9,18 @@ import UIKit
 import PencilKit
 
 @available(iOS 13.0, *)
+extension PKDrawing {
+    func image(from rect: CGRect, scale: CGFloat, userInterfaceStyle: UIUserInterfaceStyle = .light) -> UIImage {
+    let currentTraits = UITraitCollection.current
+    UITraitCollection.current = UITraitCollection(userInterfaceStyle: userInterfaceStyle)
+    let image = self.image(from: rect, scale: scale)
+    UITraitCollection.current = currentTraits
+    return image
+  }
+}
+
+
+@available(iOS 13.0, *)
 open class PencilKitSignatureView: UIView, ISignatureView {
 
     private var viewReady: Bool = false
@@ -59,7 +71,7 @@ open class PencilKitSignatureView: UIView, ISignatureView {
     */
     open var signature: UIImage? {
         get {
-            canvas.drawing.image(from: bounds, scale: 1.0)
+            canvas.drawing.image(from: bounds, scale: 1.0, userInterfaceStyle: .light) //image(from: bounds, scale: 1.0)
         }
 
         set {
@@ -134,8 +146,7 @@ open class PencilKitSignatureView: UIView, ISignatureView {
     }
 
     private func resetTool() {
-        print("resetTool:",strokeColor)
-        canvas.tool = PKInkingTool(.pen, color:.black, width: maximumStrokeWidth)
+        canvas.tool = PKInkingTool(.pen, color: strokeColor.withAlphaComponent(strokeAlpha), width: maximumStrokeWidth)
     }
 
     private func configGestureRecognizer() {

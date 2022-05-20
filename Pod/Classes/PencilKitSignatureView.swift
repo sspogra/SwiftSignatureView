@@ -134,6 +134,7 @@ open class PencilKitSignatureView: UIView, ISignatureView {
     }
 
     private func resetTool() {
+        print("resetTool:",strokeColor)
         canvas.tool = PKInkingTool(.pen, color:.black, width: maximumStrokeWidth)
     }
 

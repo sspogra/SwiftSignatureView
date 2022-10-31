@@ -39,7 +39,7 @@ open class SwiftSignatureView: UIView, ISignatureView {
 
     private lazy var instance: ISignatureView = {
         if #available(iOS 13.0, *) {
-            return PencilKitSignatureView(frame: bounds)
+            return LegacySwiftSignatureView(frame: bounds)
         }
         return LegacySwiftSignatureView(frame: bounds)
     }()
